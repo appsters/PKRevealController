@@ -49,12 +49,12 @@
 
 - (void)setupShadow
 {
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:self.bounds];
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:CGRectMake(0, -10, self.bounds.size.width, self.bounds.size.height+20)];
     self.layer.masksToBounds = NO;
     self.layer.shadowColor = [UIColor blackColor].CGColor;
     self.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    self.layer.shadowOpacity = 0.5f;
-    self.layer.shadowRadius = 2.5f;
+    self.layer.shadowOpacity = 0.8f;
+    self.layer.shadowRadius = 10.0f;
     self.layer.shadowPath = shadowPath.CGPath;
 }
 
