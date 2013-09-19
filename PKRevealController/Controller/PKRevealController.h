@@ -131,6 +131,8 @@ typedef void(^PKDefaultErrorHandler)(NSError *error);
 @property (nonatomic, assign, readwrite) BOOL recognizesPanningOnFrontView;
 @property (nonatomic, assign, readwrite) BOOL recognizesResetTapOnFrontView;
 
+@property (nonatomic, assign, readonly) BOOL presentationMode;
+
 #pragma mark - Methods
 
 /**

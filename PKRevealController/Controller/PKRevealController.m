@@ -218,6 +218,7 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
 - (void)enterPresentationModeAnimated:(BOOL)animated
                            completion:(PKDefaultCompletionHandler)completion
 {
+    _presentationMode = YES;
     if ([self isLeftViewVisible])
     {
         [self enterPresentationModeForLeftViewControllerAnimated:animated
@@ -234,6 +235,7 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
                               animated:(BOOL)animated
                             completion:(PKDefaultCompletionHandler)completion
 {
+    _presentationMode = NO;
     if ([self isLeftViewVisible])
     {
         [self resignPresentationModeForLeftViewControllerEntirely:entirely
@@ -958,8 +960,10 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
     {
         [weakSelf removeRightViewControllerFromHierarchy];
         [weakSelf addLeftViewControllerToHierarchy];
+
+        CGRect fr = _presentationMode ? [self frontViewFrameForLeftViewPresentationMode] : [weakSelf frontViewFrameForVisibleLeftView];
         
-        [weakSelf setFrontViewFrame:[weakSelf frontViewFrameForVisibleLeftView]
+        [weakSelf setFrontViewFrame:fr
                            animated:animated
                          completion:^(BOOL finished)
          {
@@ -998,8 +1002,10 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
     {
         [weakSelf removeLeftViewControllerFromHierarchy];
         [weakSelf addRightViewControllerToHierarchy];
+
+        CGRect fr = _presentationMode ? [self frontViewFrameForRightViewPresentationMode] : [weakSelf frontViewFrameForVisibleRightView];
         
-        [weakSelf setFrontViewFrame:[weakSelf frontViewFrameForVisibleRightView]
+        [weakSelf setFrontViewFrame:fr
                            animated:animated
                          completion:^(BOOL finished)
         {
