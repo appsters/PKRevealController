@@ -133,6 +133,8 @@ typedef void(^PKDefaultErrorHandler)(NSError *error);
 
 @property (nonatomic, assign, readonly) BOOL presentationMode;
 
+@property (nonatomic, assign, readwrite) BOOL showFakeStatusBar;
+
 #pragma mark - Methods
 
 /**

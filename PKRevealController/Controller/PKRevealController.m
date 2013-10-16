@@ -48,6 +48,8 @@
 @property (nonatomic, assign, readwrite) CGPoint initialTouchLocation;
 @property (nonatomic, assign, readwrite) CGPoint previousTouchLocation;
 
+@property (nonatomic, strong, readwrite) UIView *fakeStatusBarView;
+
 @end
 
 @implementation PKRevealController
@@ -431,6 +433,11 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
         
         [self updatePanGestureRecognizer];
     }
+    
+    self.fakeStatusBarView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 20)];
+    _fakeStatusBarView.backgroundColor = [UIColor blackColor];
+    _fakeStatusBarView.alpha = 0;
+    [self.view addSubview:_fakeStatusBarView];
 }
 
 - (void)removeFrontViewControllerFromHierarchy
@@ -910,6 +917,10 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
         frame.origin.x += delta;
     }
     
+    if(_showFakeStatusBar) {
+        _fakeStatusBarView.alpha = fabs(frame.origin.x) / 200.0;
+    }
+    
     self.frontViewContainer.frame = frame;
 }
 
@@ -1167,6 +1178,9 @@ NSString * const PKRevealControllerRecognizesResetTapOnFrontViewKey = @"PKReveal
     [UIView animateWithDuration:duration delay:0.0f options:options animations:^
     {
         self.frontViewContainer.frame = frame;
+        if(_showFakeStatusBar) {
+            _fakeStatusBarView.alpha = fabs(frame.origin.x) / 200.0;
+        }
     }
     completion:^(BOOL finished)
     {
